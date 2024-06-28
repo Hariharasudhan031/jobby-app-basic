@@ -1,26 +1,25 @@
-import {MdLocationOn} from 'react-icons/md'
 import {BsFillBriefcaseFill, BsStarFill} from 'react-icons/bs'
+import {MdLocationOn} from 'react-icons/md'
 import './index.css'
 
 const SimilarJobItem = props => {
   const {jobDetails} = props
   const {
     companyLogoUrl,
-    jobDescription,
     employmentType,
+    jobDescription,
     location,
     rating,
     title,
   } = jobDetails
-
   return (
     <li className="similar-job-item">
       <div className="logo-title-location-container">
         <div className="logo-title-container">
           <img
-            className="company-logo"
             src={companyLogoUrl}
             alt="similar job company logo"
+            className="company-logo"
           />
           <div className="title-rating-container">
             <h1 className="title-heading">{title}</h1>
@@ -46,5 +45,4 @@ const SimilarJobItem = props => {
     </li>
   )
 }
-
 export default SimilarJobItem

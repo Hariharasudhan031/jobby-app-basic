@@ -62,7 +62,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .nav-menu{
+  .nav-menu {
     display: none;
   }
   .nav-content {
@@ -72,7 +72,7 @@
 }
 
 .nav-menu-item {
-  font-family: "roboto";
+  font-family: 'Roboto';
   text-decoration: none;
   margin: 10px;
   font-weight: 400;
@@ -87,11 +87,12 @@
 }
 
 .logout-desktop-btn {
-  font-family: "Roboto";
-  font-size: 14px;
+  font-family: 'Roboto';
   font-weight: 600;
+  font-size: 14px;
   color: #ffffff;
   background-color: #4f46e5;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
   outline: none;
@@ -103,7 +104,6 @@
     display: none;
   }
 }
-
 .nav-bar-mobile-icons-container {
   display: flex;
   align-items: center;
@@ -121,9 +121,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
-
 .nav-item-mobile-link {
   font-size: 24px;
   color: #ffffff;

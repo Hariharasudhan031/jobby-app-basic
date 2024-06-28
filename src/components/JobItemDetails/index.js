@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 import {BsFillBriefcaseFill, BsStarFill} from 'react-icons/bs'
 import {BiLinkExternal} from 'react-icons/bi'
 import {MdLocationOn} from 'react-icons/md'
+
 import Header from '../Header'
 // eslint-disable-next-line import/extensions
 import SimilarJobItem from '../SimilarJobItem'
@@ -63,22 +64,23 @@ class JobItemDetails extends Component {
     const {match} = this.props
     const {params} = match
     const {id} = params
+
     const jwtToken = Cookies.get('jwt_token')
     const url = `https://apis.ccbp.in/jobs/${id}`
     const options = {
-      headers: {Authorization: `Bearer ${jwtToken}`},
+      headers: {
+        Authorization: `Bearer ${jwtToken}`,
+      },
       method: 'GET',
     }
+
     const response = await fetch(url, options)
     if (response.ok === true) {
       const data = await response.json()
-      console.log(data)
       const updatedData = this.getFormattedData(data.job_details)
       const updatedSimilarJobsData = data.similar_jobs.map(eachSimilarJob =>
         this.getFormattedSimilarData(eachSimilarJob),
       )
-      console.log(updatedData)
-      console.log(updatedSimilarJobsData)
       this.setState({
         jobData: updatedData,
         similarJobsData: updatedSimilarJobsData,
@@ -104,15 +106,17 @@ class JobItemDetails extends Component {
         <h1 className="job-item-failure-heading-text">
           Oops! Something Went Wrong
         </h1>
-        <p className="job-item-failur-heading-text">
-          we cannot seem to find the page you are looking for.
+        <p className="job-item-failure-description">
+          We cannot seem to find the page you are looking for
         </p>
+
         <button
-          className="job-item-failure-button"
           type="button"
+          id="button"
+          className="job-item-failure-button"
           onClick={this.getJobData}
         >
-          retry
+          Retry
         </button>
       </div>
     )
@@ -145,9 +149,9 @@ class JobItemDetails extends Component {
           <div className="logo-title-location-container">
             <div className="logo-title-container">
               <img
-                className="company-logo"
                 src={companyLogoUrl}
                 alt="job details company logo"
+                className="company-logo"
               />
               <div className="title-rating-container">
                 <h1 className="title-heading">{title}</h1>
@@ -175,7 +179,7 @@ class JobItemDetails extends Component {
           <div className="description-visit-container">
             <h1 className="description-heading">Description</h1>
             <div className="visit-container">
-              <a className="visit-heading" href={companyWebsiteUrl}>
+              <a href={companyWebsiteUrl} className="visit-heading">
                 Visit
               </a>
               <BiLinkExternal className="visit-icon" />
@@ -237,5 +241,4 @@ class JobItemDetails extends Component {
     )
   }
 }
-
 export default JobItemDetails

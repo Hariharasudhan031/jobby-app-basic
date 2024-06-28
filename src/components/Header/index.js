@@ -1,8 +1,10 @@
-import {withRouter, Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
+
+import Cookies from 'js-cookie'
+
+import {FiLogOut} from 'react-icons/fi'
 import {AiFillHome} from 'react-icons/ai'
 import {BsFillBriefcaseFill} from 'react-icons/bs'
-import {FiLogOut} from 'react-icons/fi'
-import Cookies from 'js-cookie'
 import './index.css'
 
 const Header = props => {
@@ -11,6 +13,7 @@ const Header = props => {
     Cookies.remove('jwt_token')
     history.replace('/login')
   }
+
   return (
     <nav className="nav-header">
       <div className="nav-content">
@@ -28,6 +31,8 @@ const Header = props => {
               <Link to="/">
                 <AiFillHome className="nav-item-mobile-link" />
               </Link>
+            </li>
+            <li>
               <Link to="/jobs">
                 <BsFillBriefcaseFill className="nav-item-mobile-link" />
               </Link>
@@ -35,8 +40,8 @@ const Header = props => {
             <li>
               <button
                 type="button"
+                aria-label="close"
                 className="nav-mobile-btn"
-                aria-label="text"
                 onClick={onClickLogout}
               >
                 <FiLogOut />
@@ -59,6 +64,7 @@ const Header = props => {
                 Home
               </Link>
             </li>
+
             <li className="nav-menu-item">
               <Link to="/jobs" className="nav-link">
                 Jobs

@@ -1,12 +1,13 @@
 .home-container {
-  background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: auto;
   padding-top: 10px;
   padding-bottom: 50px;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/home-sm-bg.png');
   background-size: cover;
+  height: 90vh;
 }
 
 @media screen and (min-width: 768px) {
@@ -34,8 +35,8 @@
 .home-heading {
   color: #ffffff;
   font-family: 'Roboto';
-  font-size: 30px;
   font-weight: bold;
+  font-size: 30px;
   text-align: left;
   margin-bottom: 5px;
 }
@@ -49,8 +50,8 @@
 }
 
 .home-description {
+  font-family: 'Roboto';
   font-size: 14px;
-  font-family: "roboto";
   line-height: 35px;
   color: #ffffff;
   margin-bottom: 0;
@@ -67,8 +68,8 @@
 .shop-now-button {
   font-size: 14px;
   font-weight: 400;
-  font-family: "Roboto";
-  color: #ffffff;
+  font-family: 'Roboto';
+  color: white;
   border: none;
   padding: 12px 24px;
   border-radius: 5px;

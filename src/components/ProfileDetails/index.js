@@ -25,13 +25,12 @@ class ProfileCard extends Component {
     const token = Cookies.get('jwt_token')
     const apiUrl = 'https://apis.ccbp.in/profile'
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
+      method: 'GET',
     }
     const response = await fetch(apiUrl, options)
-
     if (response.ok === true) {
       const data = await response.json()
       const profileData = {
@@ -39,10 +38,7 @@ class ProfileCard extends Component {
         profileImageUrl: data.profile_details.profile_image_url,
         shortBio: data.profile_details.short_bio,
       }
-      this.setState({
-        apiStatus: apiStatusConstants.success,
-        profileData,
-      })
+      this.setState({apiStatus: apiStatusConstants.success, profileData})
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
     }
@@ -63,9 +59,9 @@ class ProfileCard extends Component {
   renderFailureView = () => (
     <div className="profile-error-view-container">
       <button
-        className="profile-failure-button"
-        id="button"
         type="button"
+        id="button"
+        className="profile-failure-button"
         onClick={this.getProfile}
       >
         Retry
@@ -74,7 +70,7 @@ class ProfileCard extends Component {
   )
 
   renderLoadingView = () => (
-    <div className="profile-loader-container" data-testid="loader">
+    <div className="profile-loader-container " id="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
   )

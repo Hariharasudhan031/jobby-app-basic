@@ -10,5 +10,4 @@ const SkillsCard = props => {
     </li>
   )
 }
-
 export default SkillsCard

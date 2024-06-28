@@ -1,10 +1,11 @@
 import {Component} from 'react'
+import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
-import Cookies from 'js-cookie'
-import FiltersGroup from '../FiltersGroup'
 import Header from '../Header'
+import FiltersGroup from '../FiltersGroup'
 import JobCard from '../JobCard'
+
 import './index.css'
 
 const employmentTypesList = [
@@ -45,6 +46,29 @@ const salaryRangesList = [
   },
 ]
 
+const locationList = [
+  {
+    label: 'Hyderabad',
+    employmentTypeId: 'HYDERABAD',
+  },
+  {
+    label: 'Bangalore',
+    employmentTypeId: 'BANGALORE',
+  },
+  {
+    label: 'Chennai',
+    employmentTypeId: 'CHENNAI',
+  },
+  {
+    label: 'Delhi',
+    employmentTypeId: 'DELHI',
+  },
+  {
+    label: 'Mumbai',
+    employmentTypeId: 'MUMBAI',
+  },
+]
+
 const apiStatusConstants = {
   initial: 'INITIAL',
   success: 'SUCCESS',
@@ -59,6 +83,7 @@ class Jobs extends Component {
     employeeType: [],
     minimumSalary: 0,
     searchInput: '',
+    location: [],
   }
 
   componentDidMount() {
@@ -66,19 +91,20 @@ class Jobs extends Component {
   }
 
   getJobs = async () => {
-    this.setState({apiStatus: apiStatusConstants.inProgress})
-
-    const {employeeType, minimumSalary, searchInput} = this.state
-    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employeeType.join()}&minimum_package=${minimumSalary}&search=${searchInput}`
+    this.setState({
+      apiStatus: apiStatusConstants.inProgress,
+    })
+    const {employeeType, minimumSalary, searchInput, location} = this.state
+    const apiUrl = `https://apis.ccbp.in/jobs?employment_type=${employeeType.join()}&minimum_package=${minimumSalary}&search=${searchInput}&location=${location.join()}`
     const jwtToken = Cookies.get('jwt_token')
+
     const options = {
-      method: 'GET',
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
+      method: 'GET',
     }
     const response = await fetch(apiUrl, options)
-
     if (response.ok === true) {
       const data = await response.json()
       const updatedJobsData = data.jobs.map(eachJob => ({
@@ -96,7 +122,9 @@ class Jobs extends Component {
         apiStatus: apiStatusConstants.success,
       })
     } else {
-      this.setState({apiStatus: apiStatusConstants.failure})
+      this.setState({
+        apiStatus: apiStatusConstants.failure,
+      })
     }
   }
 
@@ -132,11 +160,11 @@ class Jobs extends Component {
       <img
         src="https://assets.ccbp.in/frontend/react-js/failure-img.png"
         alt="failure view"
-        className="jobs-failure-description"
+        className="jobs-failure-img"
       />
       <h1 className="jobs-failure-heading-text">Oops! Something Went Wrong</h1>
       <p className="jobs-failure-description">
-        We cannot seem to find the page you are looking for.
+        We cannot seem to find the page you are looking for
       </p>
       <button
         type="button"
@@ -150,7 +178,7 @@ class Jobs extends Component {
   )
 
   renderLoadingView = () => (
-    <div className="job-details-loader" data-testid="loader">
+    <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
   )
@@ -185,7 +213,14 @@ class Jobs extends Component {
   }
 
   changeEmployeeList = type => {
-    this.setState(prev => ({employeeType: [...prev.employeeType, type]}))
+    this.setState(
+      prev => ({employeeType: [...prev.employeeType, type]}),
+      this.getJobs,
+    )
+  }
+
+  changeLocationList = type => {
+    this.setState(prev => ({location: [...prev.location, type]}), this.getJobs)
   }
 
   render() {
@@ -198,11 +233,13 @@ class Jobs extends Component {
             <FiltersGroup
               employmentTypesList={employmentTypesList}
               salaryRangesList={salaryRangesList}
+              locationList={locationList}
               changeSearchInput={this.changeSearchInput}
               searchInput={searchInput}
               getJobs={this.getJobs}
               changeSalary={this.changeSalary}
               changeEmployeeList={this.changeEmployeeList}
+              changeLocationList={this.changeLocationList}
             />
             <div className="search-input-jobs-list-container">
               <div className="search-input-container-desktop">
@@ -216,9 +253,9 @@ class Jobs extends Component {
                 <button
                   type="button"
                   data-testid="searchButton"
-                  aria-label="text"
                   className="search-button-container-desktop"
                   onClick={this.getJobs}
+                  aria-label="close"
                 >
                   <BsSearch className="search-icon-desktop" />
                 </button>
